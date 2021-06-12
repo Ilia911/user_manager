@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<th:block th:include="/_menu"></th:block>
+
+<div th:if="${errorMessage != null}" th:utext="${errorMessage}"></div><br>
+
+<table>
+  <thead>
+  <tr>
+    <th>User id</th>
+    <th>User name</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>User Role</th>
+    <th>User Status</th>
+    <th>Create At</th>
+  </tr>
+  </thead>
+  <tbody>
+  <th:block th:each="userAccount : ${userAccounts}">
+    <tr>
+      <td th:text="${userAccount.id}"></td>
+      <td th:text="${userAccount.username}"></td>
+      <td th:text="${userAccount.firstName}"></td>
+      <td th:text="${userAccount.LastName}"></td>
+      <td th:text="${userAccount.role}"></td>
+      <td th:text="${userAccount.active}"></td>
+      <td th:text="${userAccount.createdAt}"></td>
+    </tr>
+  </th:block>
+  </tbody>
+</table>
+<h4><a href="/user/new">Register new userAccount. Only Administrator</a></h4>
+</body>
+</html>

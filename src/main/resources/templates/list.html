@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<th:block th:include="/_menu"></th:block>
+<table>
+    <thead>
+    <tr>
+        <th>User id</th>
+        <th>User name</th>
+        <th>First Name</th>
+        <th>Show details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="userAccount : ${userAccounts}">
+        <tr>
+            <td th:text="${userAccount.id}"></td>
+            <td th:text="${userAccount.username}"></td>
+            <td th:text="${userAccount.firstName}"></td>
+            <td>
+                <form th:action="@{/view}" th:object="${userAccountForId}" method="get">
+
+                    <input type="hidden" name="userId" value="${userAccount.id}"/>
+                    <button type="submit">View</button>
+                </form>
+            </td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+</body>
+</html>
