@@ -23,7 +23,6 @@
   </tr>
   </thead>
   <tbody>
-  <th:block th:each="userAccount : ${userAccounts}">
     <tr>
       <td th:text="${userAccount.id}"></td>
       <td th:text="${userAccount.username}"></td>
@@ -33,9 +32,7 @@
       <td th:text="${userAccount.active}"></td>
       <td th:text="${userAccount.createdAt}"></td>
     </tr>
-  </th:block>
   </tbody>
 </table>
-<h4><a href="/user/new">Register new userAccount. Only Administrator</a></h4>
 </body>
 </html>

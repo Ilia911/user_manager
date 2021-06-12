@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/view")
-    public String showUser(@RequestParam("userId") String userId, Model model) {
+    public String showUser(@RequestParam() String userId, Model model) {
         final Optional<UserAccount> userById = userService.findUserById(userId);
 
         if (userById.isPresent()) {
@@ -36,6 +36,11 @@ public class UserController {
         }
         model.addAttribute("errorMessage", "Such user is not exist!");
         return "view";
+
+
+/*        model.addAttribute("title", "userId");
+        model.addAttribute("message", userId);
+        return "home_page";*/
     }
 
 }

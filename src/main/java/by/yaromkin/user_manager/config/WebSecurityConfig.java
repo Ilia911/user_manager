@@ -28,12 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 //Доступ только для не зарегистрированных пользователей
-                .antMatchers("/").not().fullyAuthenticated()
+                .antMatchers("/**").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
-                .antMatchers("/user/**").hasRole("ADMIN")
-                .antMatchers("/user", "/user/view").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/view", "/user/**").hasRole("ADMIN")
+                .antMatchers("/user", "/view").hasAnyRole("USER", "ADMIN")
                 //Доступ разрешен всем пользователей
-                .antMatchers("/", "/home",  "/registration").permitAll()
+                .antMatchers("/", "/home",  "/registration", "/view", "/user").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()

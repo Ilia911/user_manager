@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Optional<UserAccount> findUserById(String userId) {
-        return userRepository.findById(userId);
+        return userRepository.findById(Long.parseLong(userId));
     }
 
     public boolean saveUser(UserAccount user) {
@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
         user.setRole(Collections.singleton(new Role(2, "ROLE_USER")));
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getInitialPassword()));
         user.setActive(true);
-        userRepository.save(user);
+        userRepository.save(user.getUsername(), user.getEncryptedPassword(), user.getFirstName(), user.getLastName(), user.isActive());
         return true;
     }
 
