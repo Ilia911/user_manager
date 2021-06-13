@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Editing user data</title>
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+<th:block th:include="/_menu"></th:block>
 
+<div th:if="${errorMessage != null}" th:utext="${errorMessage}"></div><br>
+
+
+<form action="#"
+      th:action="@{/user/{id}/update(id=${userAccount.id})}"
+      th:object="${userAccount}"
+      method="post">
+    <label for="username">Name</label>
+    <input type="text" th:field="*{username}" id="username" placeholder="Name">
+    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></br>
+
+    <label for="initialPassword">Password</label>
+    <input type="text" th:field="*{initialPassword}" id="initialPassword" placeholder="Password">
+    <span th:if="${#fields.hasErrors('initialPassword')}" th:errors="*{initialPassword}"></span></br>
+
+    <label for="firstName">Name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></br>
+
+    <label for="lastName">Password</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></br>
+
+    <label for="role">Role</label>
+    <select th:field="${userAccount.role}" id="role">
+        <option th:value="${roleUser.id}" th:text="User"></option>
+        <option th:value="${roleAdmin.id}" th:text="Admin"></option>
+    </select></br>
+
+    <label for="status">Status</label>
+    <select th:field="${userAccount.active}" id="status">
+        <option th:value="true" th:text="Unlock"></option>
+        <option th:value="false" th:text="Lock"></option>
+    </select></br>
+
+    <label for="createdAt">Created at</label>
+    <input name="createdAt" type="text" th:text="${userAccount.createdAt}" id="createdAt"></br>
+
+    <input type="submit" value="Update User">
+</form>
 </body>
 </html>

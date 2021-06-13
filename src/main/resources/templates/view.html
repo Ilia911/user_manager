@@ -19,7 +19,8 @@
     <th>Last Name</th>
     <th>User Role</th>
     <th>User Status</th>
-    <th>Create At</th>
+    <th>Created At</th>
+    <th>Edit</th>
   </tr>
   </thead>
   <tbody>
@@ -31,6 +32,9 @@
       <td th:text="${userAccount.role}"></td>
       <td th:text="${userAccount.active}"></td>
       <td th:text="${userAccount.createdAt}"></td>
+      <td>
+        <a th:href="@{/user/{id}/edit(id=${userAccount.id})}">Edit</a>
+      </td>
     </tr>
   </tbody>
 </table>

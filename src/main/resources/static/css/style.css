@@ -13,3 +13,8 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+select, option {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}

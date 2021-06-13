@@ -8,22 +8,25 @@
 <body>
 <h2>This is our registration page</h2>
 <div th:if="${registrationError != null}" th:utext="${registrationError}"></div><br>
-<form action="/registration" method="post" th:object="${userAccountForm}">
-<table>
-  <tr>
-    <th>User name</th>
-    <th>Password</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-  </tr>
-  <tr>
-    <td><input name="username" type="text" autofocus="true"></td>
-    <td><input name="initialPassword" type="text"></td>
-    <td><input name="firstName" type="text"></td>
-    <td><input name="lastName" type="text"></td>
-  </tr>
-</table>
-  <input type="submit" value="Register userAccount">
+
+<form action="#" th:action="@{/user/new}" th:object="${userForm}" method="post">
+  <label for="username">Name</label>
+  <input type="text" th:field="*{username}" id="username" placeholder="Name">
+  <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></br>
+
+  <label for="initialPassword">Password</label>
+  <input type="text" th:field="*{initialPassword}" id="initialPassword" placeholder="Password">
+  <span th:if="${#fields.hasErrors('initialPassword')}" th:errors="*{initialPassword}"></span></br>
+
+  <label for="firstName">First Name</label>
+  <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+  <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></br>
+
+  <label for="lastName">Last Name</label>
+  <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+  <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></br>
+
+  <input type="submit" value="Add User">
 </form>
 </body>
 </html>

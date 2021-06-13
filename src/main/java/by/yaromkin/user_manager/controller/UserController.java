@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
@@ -36,11 +33,6 @@ public class UserController {
         }
         model.addAttribute("errorMessage", "Such user is not exist!");
         return "view";
-
-
-/*        model.addAttribute("title", "userId");
-        model.addAttribute("message", userId);
-        return "home_page";*/
     }
 
 }

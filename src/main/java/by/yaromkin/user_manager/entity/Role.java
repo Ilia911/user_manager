@@ -5,6 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Set;
@@ -15,9 +18,7 @@ public class Role implements GrantedAuthority {
     @Id
     private Integer id;
     private String name;
-    @Transient
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserAccount> userAccounts;
+
     public Role() {
     }
 
@@ -46,13 +47,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<UserAccount> getUsers() {
-        return userAccounts;
-    }
 
-    public void setUsers(Set<UserAccount> userAccounts) {
-        this.userAccounts = userAccounts;
-    }
 
     @Override
     public String getAuthority() {
@@ -61,9 +56,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + "}";
+        return name;
     }
 
     @Override
@@ -74,15 +67,13 @@ public class Role implements GrantedAuthority {
         Role role = (Role) o;
 
         if (id != null ? !id.equals(role.id) : role.id != null) return false;
-        if (name != null ? !name.equals(role.name) : role.name != null) return false;
-        return userAccounts != null ? userAccounts.equals(role.userAccounts) : role.userAccounts == null;
+        return name != null ? name.equals(role.name) : role.name == null;
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (userAccounts != null ? userAccounts.hashCode() : 0);
         return result;
     }
 }

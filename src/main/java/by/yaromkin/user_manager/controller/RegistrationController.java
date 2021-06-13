@@ -26,7 +26,6 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-
     public String addUser(@ModelAttribute("userForm") @Valid UserAccount userAccountForm, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {

@@ -8,13 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.Collection;
-import java.util.Set;
+import java.util.Collections;
+
+import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.TABLE;
 
 @Entity
 @Table(name = "t_user")
@@ -22,7 +25,7 @@ public class UserAccount implements UserDetails {
 
     @Id
     @GeneratedValue
-    @Column(name="user_id", nullable = false)
+    @Column(name="user_id")
     private Long id;
     @Column(unique = true)
     @Size(min=3, max=16, message = "more then 2 and less then 17 latin symbols")
@@ -37,8 +40,8 @@ public class UserAccount implements UserDetails {
     private String firstName;
     @Size(min=1, max=16, message = "more then 0 and less then 17 latin symbols")
     private String lastName;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> role;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Role role;
     private boolean active;
     @Column(columnDefinition="date DEFAULT CURRENT_DATE")
     private Date createdAt;
@@ -47,7 +50,7 @@ public class UserAccount implements UserDetails {
     }
 
     public UserAccount(Long id, String username, String encryptedPassword, String initialPassword, String firstName,
-                       String lastName, Set<Role> role, boolean active, Date createdAt) {
+                       String lastName, Role role, boolean active, Date createdAt) {
         this.id = id;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
@@ -90,7 +93,7 @@ public class UserAccount implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRole();
+        return Collections.singleton(getRole());
     }
 
     @Override
@@ -118,11 +121,11 @@ public class UserAccount implements UserDetails {
         this.lastName = lastName;
     }
 
-    public Set<Role> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Set<Role> role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
