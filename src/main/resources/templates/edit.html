@@ -23,11 +23,11 @@
     <input type="text" th:field="*{initialPassword}" id="initialPassword" placeholder="Password">
     <span th:if="${#fields.hasErrors('initialPassword')}" th:errors="*{initialPassword}"></span></br>
 
-    <label for="firstName">Name</label>
+    <label for="firstName">First Name</label>
     <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
     <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span></br>
 
-    <label for="lastName">Password</label>
+    <label for="lastName">Last Name</label>
     <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
     <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span></br>
 
@@ -42,9 +42,6 @@
         <option th:value="true" th:text="Unlock"></option>
         <option th:value="false" th:text="Lock"></option>
     </select></br>
-
-    <label for="createdAt">Created at</label>
-    <input name="createdAt" type="text" th:text="${userAccount.createdAt}" id="createdAt"></br>
 
     <input type="submit" value="Update User">
 </form>

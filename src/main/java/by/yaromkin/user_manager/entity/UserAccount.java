@@ -43,7 +43,6 @@ public class UserAccount implements UserDetails {
     @OneToOne(fetch = FetchType.EAGER)
     private Role role;
     private boolean active;
-    @Column(columnDefinition="date DEFAULT CURRENT_DATE")
     private Date createdAt;
 
     public UserAccount() {

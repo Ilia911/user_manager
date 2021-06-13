@@ -66,18 +66,42 @@ public class AdminController {
 
     @PostMapping("/user/{id}/update")
     public String updateUser(@PathVariable("id") long id, @Valid UserAccount userAccount,
-                           BindingResult bindingResult, Model model) {
+                             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "Invalid input data");
             model.addAttribute(userAccount);
-            return "/view";
+            return "view";
         }
 
         userAccount.setId(id);
-        if (!userService.updateUser(userAccount)){
+        if (!userService.updateUser(userAccount)) {
             model.addAttribute("errorMessage", "User with such name has already exist");
-            return "/home_page";
+            return "home_page";
         }
         return userController.showUsers(model);
+    }
+
+    @PostMapping("/user/lock")
+    public String updateStatus(@RequestParam() String userId, Model model) {
+        final Optional<UserAccount> userById = userService.findUserById(userId);
+
+        if (userById.isPresent()) {
+            UserAccount userAccount = userById.get();
+            changeStatus(userAccount);
+            userService.updateUser(userAccount);
+        }
+
+/*        if (userById.isPresent()) {
+            UserAccount userAccount = userById.get();
+            changeStatus(userAccount);
+            model.addAttribute(userAccount);
+            return "home_page";
+        }*/
+
+        return "list";
+    }
+
+    private void changeStatus(UserAccount userAccount) {
+        userAccount.setActive(!userAccount.isActive());
     }
 }
