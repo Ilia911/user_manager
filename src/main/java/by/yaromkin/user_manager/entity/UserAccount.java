@@ -11,13 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Collections;
-
-import static javax.persistence.GenerationType.SEQUENCE;
-import static javax.persistence.GenerationType.TABLE;
 
 @Entity
 @Table(name = "t_user")
@@ -25,21 +23,32 @@ public class UserAccount implements UserDetails {
 
     @Id
     @GeneratedValue
-    @Column(name="user_id")
+    @Column(name = "user_id")
     private Long id;
+
     @Column(unique = true)
-    @Size(min=3, max=16, message = "more then 2 and less then 17 latin symbols")
+    @Size(min = 3, max = 16, message = "more then 2 and less then 17 latin symbols")
+    @Pattern(regexp = "[a-zA-Z]+", message = "it must contain only latin symbols")
     private String username;
-    @Size(min=3, max=128)
+
+    @Size(min = 3, max = 128, message = "more then 2 and less then 17 latin symbols")
     private String encryptedPassword;
     @Transient
-    @Size(min=3, max=16, message = "more then 2 and less then 17 latin symbols or digits. Minimum 1 digit. " +
+    @Size(min = 3, max = 16, message = "Minimum 1 digit. " +
             "Minimum 1 symbol")
+    @Pattern(regexp = "^(\\w*[0-9])(\\w*[a-zA-Z])$",
+            message = "it must contain 1 or more latin symbols and 1 or more digits")
+
     private String initialPassword;
-    @Size(min=1, max=16, message = "more then 0 and less then 17 latin symbols")
+
+    @Size(min = 1, max = 16, message = "more then 0 and less then 17 latin symbols")
+    @Pattern(regexp = "[a-zA-Z]+", message = "it must contain only latin symbols")
     private String firstName;
-    @Size(min=1, max=16, message = "more then 0 and less then 17 latin symbols")
+
+    @Size(min = 1, max = 16, message = "more then 0 and less then 17 latin symbols")
+    @Pattern(regexp = "[a-zA-Z]+", message = "it must contain only latin symbols")
     private String lastName;
+
     @OneToOne(fetch = FetchType.EAGER)
     private Role role;
     private boolean active;
@@ -73,7 +82,7 @@ public class UserAccount implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isActive();
     }
 
     @Override
@@ -174,7 +183,8 @@ public class UserAccount implements UserDetails {
         if (active != that.active) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (encryptedPassword != null ? !encryptedPassword.equals(that.encryptedPassword) : that.encryptedPassword != null)
+        if (encryptedPassword != null ? !encryptedPassword.equals(that.encryptedPassword)
+                : that.encryptedPassword != null)
             return false;
         if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
         if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;

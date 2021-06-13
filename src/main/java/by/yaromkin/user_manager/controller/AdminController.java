@@ -27,12 +27,12 @@ public class AdminController {
 
     @GetMapping("/user/new")
     public String fillNewUser(Model model) {
-        model.addAttribute("userAccountForm", new UserAccount());
+        model.addAttribute("userForm", new UserAccount());
         return "new";
     }
 
     @PostMapping("/user/new")
-    public String addUser(@ModelAttribute("userAccountForm") @Valid UserAccount userAccountForm,
+    public String addUser(@ModelAttribute("userForm") @Valid UserAccount userAccountForm,
                           BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
@@ -50,7 +50,7 @@ public class AdminController {
     @GetMapping("/user/{id}/edit")
     public String editUser(@PathVariable("id") long userId, Model model) {
 
-        Optional<UserAccount> userAccount = userService.findById(userId);
+        Optional<UserAccount> userAccount = userService.findUserById(String.valueOf(userId));
 
         if (userAccount.isPresent()) {
             model.addAttribute("userAccount", userAccount.get());
@@ -61,7 +61,6 @@ public class AdminController {
 
         model.addAttribute("errorMessage", "Such user is not exist!");
         return "list";
-
     }
 
     @PostMapping("/user/{id}/update")
@@ -73,7 +72,9 @@ public class AdminController {
             return "view";
         }
 
+        userAccount.setCreatedAt(userService.findUserById(String.valueOf(id)).get().getCreatedAt());
         userAccount.setId(id);
+
         if (!userService.updateUser(userAccount)) {
             model.addAttribute("errorMessage", "User with such name has already exist");
             return "home_page";
@@ -90,15 +91,7 @@ public class AdminController {
             changeStatus(userAccount);
             userService.updateUser(userAccount);
         }
-
-/*        if (userById.isPresent()) {
-            UserAccount userAccount = userById.get();
-            changeStatus(userAccount);
-            model.addAttribute(userAccount);
-            return "home_page";
-        }*/
-
-        return "list";
+        return userController.showUsers(model);
     }
 
     private void changeStatus(UserAccount userAccount) {

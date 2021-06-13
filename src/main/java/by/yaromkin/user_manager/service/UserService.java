@@ -2,7 +2,6 @@ package by.yaromkin.user_manager.service;
 
 import by.yaromkin.user_manager.entity.Role;
 import by.yaromkin.user_manager.entity.UserAccount;
-import by.yaromkin.user_manager.repository.UserCrudRepository;
 import by.yaromkin.user_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +20,6 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
-    @Autowired
-    UserCrudRepository userCrudRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -62,16 +59,8 @@ public class UserService implements UserDetailsService {
         if (user.getInitialPassword() != null) {
             user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getInitialPassword()));
         }
-
-
         userRepository.save(user);
 
-
-        // to do: create update method
         return true;
-    }
-
-    public Optional<UserAccount> findById(long id) {
-        return userCrudRepository.findById(id);
     }
 }

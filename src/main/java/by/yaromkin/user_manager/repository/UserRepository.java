@@ -9,17 +9,9 @@ public interface UserRepository extends JpaRepository<UserAccount, Long> {
 
     UserAccount findByUsername(String userName);
 
-
-
     @Query(value = "INSERT INTO public.t_user(active, encrypted_password, first_name, last_name, username, role_id) " +
             "VALUES (:active, :encrypted_password, :first_name, :last_name, :username, :role_id)", nativeQuery = true)
     void save(@Param("username") String username, @Param("encrypted_password") String encryptedPassword,
               @Param("first_name") String firstName, @Param("last_name") String lastName,
               @Param("active") boolean active, @Param("role_id") Integer roleId);
-
-
-
 }
-/*
-@Query(value = "insert into Users values (:name, :age, :email, :status)", nativeQuery = true)
-void save(@Param("name") String name, @Param("age") Integer age, @Param("status") Integer status, @Param("email") String email);*/

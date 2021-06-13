@@ -28,25 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 //Доступ только для не зарегистрированных пользователей
-                .antMatchers("/**").not().fullyAuthenticated()
+                .antMatchers("/", "/login").not().fullyAuthenticated()
                 //Доступ только для пользователей с ролью Администратор
-                .antMatchers("/view", "/user/**").hasRole("ADMIN")
                 .antMatchers("/user", "/view").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/**").hasRole("ADMIN")
                 //Доступ разрешен всем пользователей
-                .antMatchers("/", "/home",  "/registration", "/view", "/user").permitAll()
+                .antMatchers("/", "/home", "**/").permitAll()
                 //Все остальные страницы требуют аутентификации
-                .anyRequest().authenticated()
-                .and()
-                //Настройка для входа в систему
-                .formLogin()
-                .loginPage("/login")
-                //Перенарпавление на главную страницу после успешного входа
-                .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/");
+                .anyRequest().authenticated();
 
         httpSecurity.authorizeRequests().and().formLogin()//
                 // Submit URL of login page.

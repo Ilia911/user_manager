@@ -33,12 +33,11 @@ public class RegistrationController {
             return "registration";
         }
 
-        if (!userService.saveUser(userAccountForm)){
+        if (!userService.saveUser(userAccountForm)) {
             model.addAttribute("registrationError", "User with such name has already exist");
             return "registration";
         }
 
         return "redirect:/";
     }
-
 }

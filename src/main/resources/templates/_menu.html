@@ -9,6 +9,10 @@
 
   | &nbsp;
 
+  <a th:href="@{/user}">Show Users</a>
+
+  | &nbsp;
+
   <a th:if="${#request.userPrincipal == null}" th:href="@{/login}">Log in</a>
 
   | &nbsp;

@@ -13,7 +13,7 @@ import java.security.Principal;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
     public String welcomePage(Model model, Principal principal) {
         model.addAttribute("title", "Home page");
         model.addAttribute("message", "This is home page!");
@@ -46,17 +46,12 @@ public class MainController {
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public String userInfo(Model model, Principal principal) {
 
-        // After user login successfully.
-        String userName = principal.getName();
-
-/*        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-        String userInfo = WebUtils.toString(loginedUser);*/
-        model.addAttribute("userInfo", userName);
+        model.addAttribute("userInfo", principal.getName());
 
         return "userInfoPage";
     }
 
+    //todo: complete this method
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
 
@@ -70,10 +65,7 @@ public class MainController {
             String message = "Hi " + principal.getName() //
                     + "<br> You do not have permission to access this page!";
             model.addAttribute("message", message);
-
         }
-
         return "403Page";
     }
-
 }
