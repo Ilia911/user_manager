@@ -34,11 +34,9 @@ public class UserAccount implements UserDetails {
     @Size(min = 3, max = 128, message = "more then 2 and less then 17 latin symbols")
     private String encryptedPassword;
     @Transient
-    @Size(min = 3, max = 16, message = "Minimum 1 digit. " +
-            "Minimum 1 symbol")
-    @Pattern(regexp = "^(\\w*[0-9])(\\w*[a-zA-Z])$",
-            message = "it must contain 1 or more latin symbols and 1 or more digits")
-
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{3,16}$",
+            message = "Only latin symbols and digits. " +
+                    "A digit must occur at least once, latin letter must occur at least once, size: min = 3, max = 16")
     private String initialPassword;
 
     @Size(min = 1, max = 16, message = "more then 0 and less then 17 latin symbols")
