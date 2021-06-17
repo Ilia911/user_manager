@@ -60,7 +60,7 @@ public class AdminController {
         }
 
         model.addAttribute("errorMessage", "Such user is not exist!");
-        return "list";
+        return userController.showUsers(model);
     }
 
     @PostMapping("/user/{id}/update")
@@ -79,7 +79,7 @@ public class AdminController {
             model.addAttribute("errorMessage", "User with such name has already exist");
             return "home_page";
         }
-        return userController.showUsers(model);
+        return "redirect:/users";
     }
 
     @PostMapping("/user/lock")
@@ -91,7 +91,7 @@ public class AdminController {
             changeStatus(userAccount);
             userService.updateUser(userAccount);
         }
-        return userController.showUsers(model);
+        return "redirect:/users";
     }
 
     private void changeStatus(UserAccount userAccount) {

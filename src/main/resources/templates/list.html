@@ -14,7 +14,6 @@
         <th>User name</th>
         <th>First Name</th>
         <th>Show details</th>
-        <th>Change Status</th>
     </tr>
     </thead>
     <tbody>
@@ -24,15 +23,9 @@
             <td th:text="${userAccount.username}"></td>
             <td th:text="${userAccount.firstName}"></td>
             <td>
-                <form action="/view" method="get">
+                <form action="/user" method="get">
                     <input type="hidden" name="userId" th:value="${userAccount.id}">
                     <button type="submit">View</button>
-                </form>
-            </td>
-            <td>
-                <form action="/user/lock" method="post">
-                    <input type="hidden" name="userId" th:value="${userAccount.id}">
-                    <button type="submit">Change Status</button>
                 </form>
             </td>
         </tr>

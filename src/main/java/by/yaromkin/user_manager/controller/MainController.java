@@ -31,7 +31,6 @@ public class MainController {
         return "adminPage";
     }
 
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(Model model) {
         return "login";

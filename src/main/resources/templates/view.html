@@ -7,9 +7,6 @@
 </head>
 <body>
 <th:block th:include="/_menu"></th:block>
-
-<div th:if="${errorMessage != null}" th:utext="${errorMessage}"></div><br>
-
 <table>
   <thead>
   <tr>
@@ -20,6 +17,7 @@
     <th>User Role</th>
     <th>User Status</th>
     <th>Created At</th>
+    <th>Change status</th>
     <th>Edit</th>
   </tr>
   </thead>
@@ -32,6 +30,12 @@
       <td th:text="${userAccount.role}"></td>
       <td th:text="${userAccount.active}"></td>
       <td th:text="${userAccount.createdAt}"></td>
+      <td>
+        <form action="/user/lock" method="post">
+          <input type="hidden" name="userId" th:value="${userAccount.id}">
+          <button type="submit">Change Status</button>
+        </form>
+      </td>
       <td>
         <a th:href="@{/user/{id}/edit(id=${userAccount.id})}">Edit</a>
       </td>
