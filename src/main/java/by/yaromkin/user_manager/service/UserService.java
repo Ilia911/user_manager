@@ -2,6 +2,7 @@ package by.yaromkin.user_manager.service;
 
 import by.yaromkin.user_manager.entity.Role;
 import by.yaromkin.user_manager.entity.UserAccount;
+import by.yaromkin.user_manager.repository.UserInsertRepository;
 import by.yaromkin.user_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +21,8 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    UserInsertRepository userInsertRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -49,8 +52,7 @@ public class UserService implements UserDetailsService {
         user.setRole(new Role(2, "ROLE_USER"));
         user.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getInitialPassword()));
         user.setActive(true);
-        userRepository.save(user.getUsername(), user.getEncryptedPassword(), user.getFirstName(), user.getLastName(),
-                user.isActive(), user.getRole().getId());
+        userInsertRepository.insertUserAccountWithQuery(user);
         return true;
     }
 
