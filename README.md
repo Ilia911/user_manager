@@ -4,7 +4,8 @@ user manager test task
 Условия тестового задания: Testovoe_zadanie_na_pozitsiu_Junior_Java_Developer.pdf
 
 Для создания БД необходимо в pgAdmin 4 создать новую БД с именем user_manager;\
-восстановить БД из файла user_manager_sql.
+восстановить БД из файла user_manager_sql.\
+файл user_manager_sql создан при помощи вспомогательной программы pg_dump
 
 Зайти с правами администратора:\
 Username: Admin\
