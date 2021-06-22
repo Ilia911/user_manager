@@ -44,7 +44,7 @@ public class AdminController {
             model.addAttribute("registrationError", "User with such name has already exist");
             return "list";
         }
-        return userController.showUsers(model);
+        return "redirect:/users";
     }
 
     @GetMapping("/user/{id}/edit")
